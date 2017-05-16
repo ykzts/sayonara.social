@@ -1,4 +1,8 @@
-import { distanceInWordsStrict } from 'date-fns';
+import {
+  distanceInWordsStrict,
+  isBefore,
+  subDays,
+} from 'date-fns';
 import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -8,6 +12,7 @@ import Button from './Button';
 
 const Root = styled.div`
   align-items: center;
+  background-color: ${props => (props.past ? '#eee' : '#fff')};
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -58,6 +63,7 @@ const Status = styled.div`
 `;
 
 const Action = styled.div`
+  padding: 1rem;
 `;
 
 export default class UserCard extends Component {
@@ -148,8 +154,10 @@ export default class UserCard extends Component {
   render() {
     const { user } = this.props;
     const status = (this.state.statuses || [])[0];
+    const nDaysAgo = subDays(new Date(), 14);
+    const lastUpdate = status ? new Date(status.created_at) : new Date();
     return (
-      <Root>
+      <Root past={isBefore(lastUpdate, nDaysAgo)}>
         <Info>
           <Avatar href={user.url} rel="noopener" target="_blank">
             <AvatarImage height={120} src={user.avatar} width={120} />
@@ -160,7 +168,7 @@ export default class UserCard extends Component {
             </Name>
             <Status>
               <span>Last update: </span>
-              <span>{status ? distanceInWordsStrict(new Date(), status.created_at, { addSuffix: true }) : '...'}</span>
+              <span>{status ? distanceInWordsStrict(new Date(), lastUpdate, { addSuffix: true }) : '...'}</span>
             </Status>
           </Content>
         </Info>
