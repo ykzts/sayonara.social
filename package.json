@@ -10,6 +10,7 @@
     "react-router-dom": "^4.1.1",
     "styled-components": "^1.4.6"
   },
+  "description": "The following list for the any Mastodon instance.",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
