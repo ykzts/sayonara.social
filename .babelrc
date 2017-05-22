@@ -2,6 +2,7 @@
   "env": {
     "production": {
       "plugins": [
+        "date-fns",
         "lodash"
       ]
     }
