@@ -1,4 +1,11 @@
 {
+  "env": {
+    "production": {
+      "plugins": [
+        "lodash"
+      ]
+    }
+  },
   "plugins": [
     "transform-class-properties"
   ],
