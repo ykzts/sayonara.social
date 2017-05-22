@@ -49,7 +49,7 @@ const Root = styled.div`
   max-width: 750px;
 `;
 
-const LoadMore = styled.button`
+const LoadMoreButton = styled.button`
   background-color: #4fc3f7;
   border: 0;
   border-radius: 0.3rem;
@@ -73,6 +73,12 @@ export default class Following extends Component {
     accessToken: PropTypes.string.isRequired,
   };
 
+  constructor(...args) {
+    super(...args);
+    this.observer = null;
+    this.loadMoreButton = null;
+  }
+
   state = {
     loading: false,
     nextUri: null,
@@ -82,8 +88,14 @@ export default class Following extends Component {
   componentWillMount() {
     const { accessToken } = this.props;
     getFollowing({ accessToken }).then(({ nextUri, users }) => {
-      this.setState({ nextUri, users });
+      this.setState({ nextUri, users }, this.setObserve);
     }).catch(console.error.bind(console)); // eslint-disable-line no-console
+  }
+
+  componentDidMount() {
+    this.observer = new IntersectionObserver(this.observerCallback, {
+      rootMargin: '300px',
+    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -93,6 +105,24 @@ export default class Following extends Component {
       !isEqual(this.state.users, nextState.users) ||
       this.props.accessToken !== nextProps.accessToken
     );
+  }
+
+  componentWillUnmount() {
+    this.observer.disconnect();
+  }
+
+  setObserve() {
+    if (this.loadMoreButton) {
+      this.observer.observe(this.loadMoreButton);
+    }
+  }
+
+  observerCallback = (entries) => {
+    entries.forEach(({ isIntersecting }) => {
+      if (isIntersecting) {
+        this.handleClick();
+      }
+    });
   }
 
   handleClick = () => {
@@ -120,7 +150,12 @@ export default class Following extends Component {
           <UserCard key={`user-${user.id}`} user={user} />
         ))}
         {users.length > 0 && nextUri && (
-          <LoadMore disabled={this.state.loading} onClick={this.handleClick} type="button">Load more</LoadMore>
+          <LoadMoreButton
+            disabled={this.state.loading}
+            innerRef={c => (this.loadMoreButton = c)}
+            onClick={this.handleClick}
+            type="button"
+          >Load more</LoadMoreButton>
         )}
       </Root>
     );
