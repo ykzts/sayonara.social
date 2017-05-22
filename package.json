@@ -3,6 +3,7 @@
     "cross-env": "^5.0.0",
     "date-fns": "^1.28.4",
     "http-link-header": "^0.8.0",
+    "intersection-observer": "^0.2.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
