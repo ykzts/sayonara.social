@@ -154,13 +154,14 @@ export default class UserCard extends Component {
   render() {
     const { user } = this.props;
     const status = (this.state.statuses || [])[0];
+    const avatarUri = new URL(user.avatar, user.url).href;
     const nDaysAgo = subDays(new Date(), 14);
     const lastUpdate = status ? new Date(status.created_at) : new Date();
     return (
       <Root past={isBefore(lastUpdate, nDaysAgo)}>
         <Info>
           <Avatar href={user.url} rel="noopener" target="_blank">
-            <AvatarImage height={120} src={user.avatar} width={120} />
+            <AvatarImage height={120} src={avatarUri} width={120} />
           </Avatar>
           <Content>
             <Name>
