@@ -65,7 +65,7 @@ export default class SignInForm extends Component {
       params.append('redirect_uri', nextProps.redirectUri);
       params.append('response_type', 'code');
       params.append('scope', 'read follow');
-      location.href = `https://${nextState.host}/oauth/authorize?${params.toString()}`;
+      window.location.href = `https://${nextState.host}/oauth/authorize?${params.toString()}`;
     }
   }
 

@@ -65,7 +65,9 @@ export default class Home extends Component {
           onClick={this.handleClick}
           type="button"
           visible={!!accessToken}
-        >Logout</SignOutButton>
+        >
+          Logout
+        </SignOutButton>
       </Root>
     );
   }

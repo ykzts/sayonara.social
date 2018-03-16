@@ -152,10 +152,12 @@ export default class Following extends Component {
         {users.length > 0 && nextUri && (
           <LoadMoreButton
             disabled={this.state.loading}
-            innerRef={c => (this.loadMoreButton = c)}
+            innerRef={(c) => { this.loadMoreButton = c; }}
             onClick={this.handleClick}
             type="button"
-          >Load more</LoadMoreButton>
+          >
+            Load more
+          </LoadMoreButton>
         )}
       </Root>
     );
