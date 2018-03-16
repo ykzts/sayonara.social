@@ -2,22 +2,19 @@ version: '2'
 jobs:
   build:
     docker:
-      - image: node:6.10.3-slim
+      - image: circleci/node:8.10.0-stretch
     working_directory: ~/mastodon-following-list
     steps:
       - checkout
       - restore_cache:
-          key: mastodon-following-list-dependencies-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - run: yarn install
       - save_cache:
-          key: twi4-app-dependencies-{{ checksum "yarn.lock" }}
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
           paths:
+            - ~/.cache/yarn/v1
             - ./node_modules
-      - run:
-          name: Build Assets
-          command: yarn build
-      - run:
-          name: Run Lint
-          command: yarn lint
+      - run: yarn lint
+      - run: yarn build
