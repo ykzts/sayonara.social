@@ -1,4 +1,3 @@
-const BabiliPlugin = require('babili-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const path = require('path');
@@ -13,6 +12,7 @@ module.exports = (env = process.env.NODE_ENV || 'development') => ({
   entry: {
     main: path.resolve(__dirname, 'src', 'main.js'),
   },
+  mode: env === 'production' ? 'production' : 'development',
   module: {
     rules: [
       {
@@ -67,7 +67,6 @@ module.exports = (env = process.env.NODE_ENV || 'development') => ({
           from: path.resolve(__dirname, 'src', 'templates', '_redirects'),
         },
       ]),
-      new BabiliPlugin(),
     ] : []),
   ],
 });

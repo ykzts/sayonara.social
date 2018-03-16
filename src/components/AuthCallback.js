@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import session from '../session';
 
-async function getAccessToken({ clientId, clientSecret, code, host, redirectUri }) {
+async function getAccessToken({
+  clientId,
+  clientSecret,
+  code,
+  host,
+  redirectUri,
+}) {
   if (!clientId || !clientSecret || !code || !host || !redirectUri) {
     throw new TypeError('invalid params.');
   }

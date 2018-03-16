@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
 const FieldSetRoot = styled.fieldset`
@@ -18,7 +18,7 @@ const Label = styled.label`
   padding: 0;
 `;
 
-export default class FieldSet extends Component {
+export default class FieldSet extends PureComponent {
   static defaultProps = {
     children: [],
     htmlFor: null,

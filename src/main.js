@@ -27,11 +27,12 @@ function render(element, container) {
 
 async function main() {
   const container = createContainer();
-  await render((
+  await render(
     <Router>
-      <App location={location} />
-    </Router>
-  ), container);
+      <App location={window.location} />
+    </Router>,
+    container,
+  );
 }
 
 main().catch(console.error.bind(console)); // eslint-disable-line no-console
