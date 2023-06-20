@@ -2,7 +2,7 @@ version: '2'
 jobs:
   build:
     docker:
-      - image: circleci/node:8.10.0-stretch
+      - image: cimg/node:16.20
     working_directory: ~/mastodon-following-list
     steps:
       - checkout
